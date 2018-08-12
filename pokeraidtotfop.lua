@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180811 2100")
+addTextView("ver：20180812 1730")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -169,6 +169,9 @@ while true do
 			wait(stepWaitSec)
 		elseif exists("msg_ok.png", 0) and (exists("msg_trespass.png", 0) or exists("msg_trespass_en.png", 0)) then
 			click(exists("msg_ok.png", 0))
+			wait(stepWaitSec)
+		elseif exists("msg_passenger.png", 0) or exists("msg_passenger_en.png", 0) then
+			click(getLastMatch())
 			wait(stepWaitSec)
 		elseif exists("msg_see_details.png", 0) or exists("msg_see_details_en.png", 0) then
 			click(getLastMatch())
