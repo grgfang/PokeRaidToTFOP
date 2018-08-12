@@ -67,7 +67,7 @@ Pixel.
 - 關閉上傳對話框 / Close Upload dialog box
 - 按 Home 鍵 / press the Home button
 
-<img src="https://i.imgur.com/93xYIjR.png" width="270"> <img src="https://i.imgur.com/Dhm2Ywj.png" width="270"> <img src="https://i.imgur.com/CGnwfCH.png" width="270"> <img src="https://i.imgur.com/qO2ZDHn.png" width="270"> <img src="https://i.imgur.com/m1b7DK5.png" width="270"> <img src="https://i.imgur.com/Ai3ULag.png" width="270">
+<img src="https://i.imgur.com/93xYIjR.png" width="270"> <img src="https://i.imgur.com/Dhm2Ywj.png" width="270"> <img src="https://i.imgur.com/CGnwfCH.png" width="270"> <img src="https://i.imgur.com/qO2ZDHn.png" width="270"> <img src="https://i.imgur.com/m1b7DK5.png" width="270"> <img src="https://i.imgur.com/BQoy1cm.png" width="270">
 
 ### 完成 / Finished
 - 手動程序過程若符合上述圖檔, 極可能不需調整, 就可執行本自動化腳本
@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180807 2340")
+addTextView("ver：20180811 2100")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -108,12 +108,18 @@ newRow()
 addTextView("Report Interval (seconds) = ")
 addEditNumber("intPRTF_Interval", 1500)
 
+newRow()
+addTextView("Step Wait Seconds = ")
+addEditNumber("intPRTF_StepWait", 10)
+
 dialogShow("Set Parameters")
 
 intHHbgn = intPRTF_HHbgn
 intHHend = intPRTF_HHend
 
 rptInterval = intPRTF_Interval
+stepWaitSec = intPRTF_StepWait
+
 thrCnt = 0
 
 regUpper = Region(0, 0, 540, 430)
@@ -147,150 +153,153 @@ while true do
 	elseif flgStep == 0 then
 		-- Launch Pokemong GO
 		keyevent(3) -- home
-		wait(10)
+		wait(stepWaitSec)
 		if exists("home_pokemon_go.png", 0) and exists("home_tfop.png", 0) then
 			click(exists("home_pokemon_go.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 			flgStep = 1
 		end
 	elseif flgStep == 1 then
 		-- Message
 		if exists("msg_ok.png", 0) and (exists("msg_dangerous.png", 0) or exists("msg_dangerous_en.png", 0)) then
 			click(exists("msg_ok.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("msg_ok.png", 0) and (exists("msg_driving.png", 0) or exists("msg_driving_en.png", 0)) then
 			click(exists("msg_ok.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("msg_ok.png", 0) and (exists("msg_trespass.png", 0) or exists("msg_trespass_en.png", 0)) then
 			click(exists("msg_ok.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("msg_see_details.png", 0) or exists("msg_see_details_en.png", 0) then
 			click(getLastMatch())
 			flgSeeDetails = 1
-			wait(10)
+			wait(stepWaitSec)
 		elseif flgSeeDetails == 1 and exists("msg_exit.png", 0) then
 			click(getLastMatch())
 			flgSeeDetails = 2
-			wait(10)
+			wait(stepWaitSec)
 		-- Nearby Raid Screenshot
 		elseif regMain:exists("main_menu.png", 0) then
 			-- Main
 			click(regMain:exists(Pattern("main_menu.png"):targetOffset(200,0),0))
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_pokemon_find.png", 0) and exists("nearby_pokemon_find_exit.png", 0) then
 			-- Nearby Pokemon Find
 			click(exists("nearby_pokemon_find_exit.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_pokemong_active.png", 0) and (exists("nearby_blank.png", 0) or exists("nearby_pokemon_none.png", 0)) then
 			-- Nearby Pokemon and no internet connection
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_pokemong_active_en.png", 0) and (exists("nearby_blank.png", 0) or exists("nearby_pokemon_none_en.png", 0)) then
 			-- Nearby Pokemon and no internet connection
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_pokemong_active.png", 0) then
 			-- Nearby Pokemon
 			click(regUpper:exists("nearby_raid_title.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_pokemong_active_en.png", 0) then
 			-- Nearby Pokemon
 			click(regUpper:exists("nearby_raid_title_en.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_raid_active.png", 0) and exists("nearby_blank.png", 0) then
 			-- Nearby Raid and no internet connection
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_raid_active_en.png", 0) and exists("nearby_blank.png", 0) then
 			-- Nearby Raid and no internet connection
-			wait(10)
+			wait(stepWaitSec)
 		elseif exists("nearby_raid_active.png", 0) and exists("nearby_raid_none.png", 0) then
 			-- Nearby Raid and not found
 			click(regBottom:exists("nearby_exit.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 			flgStep = 99
 		elseif exists("nearby_raid_active_en.png", 0) and exists("nearby_raid_none_en.png", 0) then
 			-- Nearby Raid and not found
 			click(regBottom:exists("nearby_exit.png", 0))
-			wait(10)
+			wait(stepWaitSec)
 			flgStep = 99
 		elseif exists("nearby_raid_active.png", 0) or exists("nearby_raid_active_en.png", 0) then
 			-- Nearby Raid
 			keyevent(120) -- screenshot
-			wait(10)
+			wait(stepWaitSec)
 			funSnapContinue()
 			while regBottom:exists("nearby_exit.png", 0) do
 				click(regBottom:getLastMatch())
-				wait(5)
+				wait(stepWaitSec)
 			end
 			keyevent(3) -- home
-			wait(10)
+			wait(stepWaitSec)
 			flgStep = 10
 		end
 	elseif (flgStep == 10 or flgStep == 11) and exists("home_pokemon_go.png", 0) and exists("home_tfop.png", 0) then
 		-- Nearby Raid Screenshot Report to TFOP
 		-- Lanuch TFOP
 		click(exists("home_tfop.png", 0))
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 11
 		startTFOP = os.time()
 	elseif flgStep == 11 and exists("tfop_upload.png", 0) then
 		-- close Upload dialog
 		click(exists(Pattern("tfop_upload.png"):targetOffset(230,0), 0))
-		wait(10)
+		wait(stepWaitSec)
 	elseif (flgStep == 11 or flgStep == 12) and os.difftime(currTime, startTFOP) >= 120 then
 		-- restart TFOP
 		keyevent(3) -- home
-		wait(10)
+		wait(stepWaitSec)
 		--killApp("com.android.chrome")
-		--wait(10)
+		--wait(stepWaitSec)
 		flgStep = 10
 	elseif (flgStep == 11 or flgStep == 12) and exists("tfop_title.png", 0) and exists("tfop_me.png", 0) then
 		-- Wait TFOP ready, set follow me ON
 		click(exists(Pattern("tfop_title.png"):targetOffset(140,0), 0))
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 12
 	elseif (flgStep == 12 or flgStep == 13) and (exists("tfop_choose_file.png", 0) or exists("tfop_choose_file_en.png", 0)) then
 		-- Choose file
 		click(getLastMatch())
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 13
 	elseif (flgStep == 13 or flgStep == 14) and exists("tfop_select_file.png", 0) then
 		-- Select file
 		click(getLastMatch())
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 14
 	elseif (flgStep == 14 or flgStep == 15) and exists("tfop_select_file_recent.png", 0) then
 		-- Select Recent
 		longClick(exists(Pattern("tfop_select_file_recent.png"):targetOffset(0,85), 0), 1)
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 15
 	elseif (flgStep == 14 or flgStep == 15) and exists("tfop_select_file_recent_en.png", 0) then
 		-- Select Recent
 		longClick(exists(Pattern("tfop_select_file_recent_en.png"):targetOffset(0,85), 0), 1)
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 15
 	elseif (flgStep == 14 or flgStep == 15) and exists("tfop_select_file_screenshots.png", 0) then
 		-- Select Recent
 		longClick(exists(Pattern("tfop_select_file_screenshots.png"):targetOffset(0,85), 0), 1)
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 15
 	elseif (flgStep == 14 or flgStep == 15) and exists("tfop_select_1_item.png", 0) and exists("tfop_select_item_open.png", 0) then
 		-- Select Recent
 		click(exists("tfop_select_item_open.png", 0))
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 15
 	elseif (flgStep == 14 or flgStep == 15) and exists("tfop_select_1_item_en.png", 0) and exists("tfop_select_item_open_en.png", 0) then
 		-- Select Recent
 		click(exists("tfop_select_item_open_en.png", 0))
-		wait(10)
+		wait(stepWaitSec)
 		flgStep = 15
 	elseif flgStep == 15 and exists("tfop_upload.png", 0) then
 		-- Upload
 		click(getLastMatch())
-		wait(60)
-		click(exists(Pattern("tfop_upload.png"):targetOffset(230,0), 0))
-		wait(10)
-		keyevent(3) -- home
-		wait(10)
-		flgStep = 99
+		-- wait(60)
+		funSnapContinue()
+		if exists("tfop_upload_success.png", 60) then
+			click(exists(Pattern("tfop_upload.png"):targetOffset(230,0), 0))
+			wait(stepWaitSec)
+			keyevent(3) -- home
+			wait(stepWaitSec)
+			flgStep = 99
+		end
 	end
 
 end
