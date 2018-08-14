@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180812 1730")
+addTextView("ver：20180814 1715")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -228,6 +228,11 @@ while true do
 			while regBottom:exists("nearby_exit.png", 0) do
 				click(regBottom:getLastMatch())
 				wait(stepWaitSec)
+				-- Message
+				if exists("msg_passenger.png", 0) or exists("msg_passenger_en.png", 0) then
+					click(getLastMatch())
+					wait(stepWaitSec)
+				end
 			end
 			keyevent(3) -- home
 			wait(stepWaitSec)
