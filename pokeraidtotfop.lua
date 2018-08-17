@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180814 1715")
+addTextView("ver：20180817 2100")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -231,6 +231,9 @@ while true do
 				-- Message
 				if exists("msg_passenger.png", 0) or exists("msg_passenger_en.png", 0) then
 					click(getLastMatch())
+					wait(stepWaitSec)
+					-- Nearby Raid
+					keyevent(120) -- screenshot
 					wait(stepWaitSec)
 				end
 			end
