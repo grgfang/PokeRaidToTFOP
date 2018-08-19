@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180818 0715")
+addTextView("ver：20180818 1750")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -151,15 +151,16 @@ while true do
 		flgStep = 0
 		flgSeeDetails = 0
 	elseif flgStep == 0 then
-		-- Launch Pokemong GO
+		-- Home
 		keyevent(3) -- home
 		wait(stepWaitSec)
-		if exists("home_pokemon_go.png", 0) and exists("home_tfop.png", 0) then
-			click(exists("home_pokemon_go.png", 0))
-			wait(stepWaitSec)
-			flgStep = 1
-		end
-	elseif flgStep == 1 then
+		flgStep = 1
+	elseif (flgStep == 1 or flgStep == 2) and exists("home_pokemon_go.png", 0) and exists("home_tfop.png", 0) then
+		-- Launch Pokemong GO
+		click(exists("home_pokemon_go.png", 0))
+		wait(stepWaitSec)
+		flgStep = 2
+	elseif flgStep == 2 then
 		-- Message
 		if exists("msg_ok.png", 0) and (exists("msg_dangerous.png", 0) or exists("msg_dangerous_en.png", 0)) then
 			click(exists("msg_ok.png", 0))
