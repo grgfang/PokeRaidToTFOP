@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180818 1750")
+addTextView("ver：20180826 1410")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -123,6 +123,7 @@ stepWaitSec = intPRTF_StepWait
 thrCnt = 0
 
 regUpper = Region(0, 0, 540, 430)
+regMidLow = Region(0, 180, 540, 780)
 regBottom = Region(0, 730, 540, 230)
 regMain = regBottom
 
@@ -197,19 +198,19 @@ while true do
 		elseif exists("nearby_pokemong_active_en.png", 0) and (exists("nearby_blank.png", 0) or exists("nearby_pokemon_none_en.png", 0)) then
 			-- Nearby Pokemon and no internet connection
 			wait(stepWaitSec)
-		elseif exists("nearby_pokemong_active.png", 0) then
+		elseif regUpper:exists("nearby_pokemong_active.png", 0) then
 			-- Nearby Pokemon
 			click(regUpper:exists("nearby_raid_title.png", 0))
 			wait(stepWaitSec)
-		elseif exists("nearby_pokemong_active_en.png", 0) then
+		elseif regUpper:exists("nearby_pokemong_active_en.png", 0) then
 			-- Nearby Pokemon
 			click(regUpper:exists("nearby_raid_title_en.png", 0))
 			wait(stepWaitSec)
-		elseif exists("nearby_raid_active.png", 0) and exists("nearby_blank.png", 0) then
-			-- Nearby Raid and no internet connection
+		elseif exists("nearby_raid_active.png", 0) and (exists("nearby_blank.png", 0) or regMidLow:exists(Pattern("nearby_unknown.png"):similar(0.9), 0)) then
+			-- Nearby Raid and no internet connection / gym unknown
 			wait(stepWaitSec)
-		elseif exists("nearby_raid_active_en.png", 0) and exists("nearby_blank.png", 0) then
-			-- Nearby Raid and no internet connection
+		elseif exists("nearby_raid_active_en.png", 0) and (exists("nearby_blank.png", 0) or regMidLow:exists(Pattern("nearby_unknown.png"):similar(0.9), 0)) then
+			-- Nearby Raid and no internet connection / gym unknown
 			wait(stepWaitSec)
 		elseif exists("nearby_raid_active.png", 0) and exists("nearby_raid_none.png", 0) then
 			-- Nearby Raid and not found
