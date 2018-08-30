@@ -66,7 +66,7 @@ Pixel.
 - 關閉上傳對話框 / Close Upload dialog box
 - 按 Home 鍵 / press the Home button
 
-<img src="https://i.imgur.com/93xYIjR.png" width="270"> <img src="https://i.imgur.com/Dhm2Ywj.png" width="270"> <img src="https://i.imgur.com/CGnwfCH.png" width="270"> <img src="https://i.imgur.com/qO2ZDHn.png" width="270"> <img src="https://i.imgur.com/m1b7DK5.png" width="270"> <img src="https://i.imgur.com/BQoy1cm.png" width="270">
+<img src="https://i.imgur.com/QFEzNOO.png" width="270"> <img src="https://i.imgur.com/nrp68zV.png" width="270"> <img src="https://i.imgur.com/Ho01hEa.png" width="270"> <img src="https://i.imgur.com/qO2ZDHn.png" width="270"> <img src="https://i.imgur.com/m1b7DK5.png" width="270"> <img src="https://i.imgur.com/KOHdBjp.png" width="270">
 
 ### 完成 / Finished
 - 手動程序過程若符合上述圖檔, 極可能不需調整, 就可執行本自動化腳本

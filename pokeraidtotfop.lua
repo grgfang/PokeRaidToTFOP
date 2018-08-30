@@ -57,7 +57,7 @@ Pixel.
 ### 截圖回報到公園前 / Nearby Raid Screenshot to TFOP
 - 按 Home 鍵 / press the Home button
 - 點擊公園前圖示 / Click on the TFOP icon: 等待【我】圖示 / Wait [me] icon
-- 點擊表頭的【團戰截圖回報】 / Click on the title [團戰截圖回報]: 出現上傳對話框 / Display Upload dialog box
+- 點擊【團戰截圖回報】 / Click on [團戰截圖回報]: 出現上傳對話框 / Display Upload dialog box
 - 點擊【選擇檔案】 / Click on the [Choose File]
 - 點擊【檔案】圖示 / Click on the [Files] icon
 - 選項 / Optional: 如果不是截圖目錄[Screenshots], 手動選到該目錄 / If it is not the screenshot directory [Screenshots], manually select the directory
@@ -67,7 +67,7 @@ Pixel.
 - 關閉上傳對話框 / Close Upload dialog box
 - 按 Home 鍵 / press the Home button
 
-<img src="https://i.imgur.com/93xYIjR.png" width="270"> <img src="https://i.imgur.com/Dhm2Ywj.png" width="270"> <img src="https://i.imgur.com/CGnwfCH.png" width="270"> <img src="https://i.imgur.com/qO2ZDHn.png" width="270"> <img src="https://i.imgur.com/m1b7DK5.png" width="270"> <img src="https://i.imgur.com/BQoy1cm.png" width="270">
+<img src="https://i.imgur.com/QFEzNOO.png" width="270"> <img src="https://i.imgur.com/nrp68zV.png" width="270"> <img src="https://i.imgur.com/Ho01hEa.png" width="270"> <img src="https://i.imgur.com/qO2ZDHn.png" width="270"> <img src="https://i.imgur.com/m1b7DK5.png" width="270"> <img src="https://i.imgur.com/KOHdBjp.png" width="270">
 
 ### 完成 / Finished
 - 手動程序過程若符合上述圖檔, 極可能不需調整, 就可執行本自動化腳本
@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180826 1410")
+addTextView("ver：20180830 1030")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -252,9 +252,15 @@ while true do
 		wait(stepWaitSec)
 		flgStep = 11
 		startTFOP = os.time()
+	--[[
 	elseif flgStep == 11 and exists("tfop_upload.png", 0) then
 		-- close Upload dialog
 		click(exists(Pattern("tfop_upload.png"):targetOffset(230,0), 0))
+		wait(stepWaitSec)
+	--]]
+	elseif flgStep == 11 and exists("pms_upload.png", 0) and exists("pms_close.png", 0) then
+		-- close Upload dialog (pms)
+		click(exists("pms_close.png", 0))
 		wait(stepWaitSec)
 	elseif (flgStep == 11 or flgStep == 12) and os.difftime(currTime, startTFOP) >= 120 then
 		-- restart TFOP
@@ -263,16 +269,23 @@ while true do
 		--killApp("com.android.chrome")
 		--wait(stepWaitSec)
 		flgStep = 10
+	--[[
 	elseif (flgStep == 11 or flgStep == 12) and exists("tfop_title.png", 0) and exists("tfop_me.png", 0) then
 		-- Wait TFOP ready, set follow me ON
 		click(exists(Pattern("tfop_title.png"):targetOffset(140,0), 0))
 		wait(stepWaitSec)
 		flgStep = 12
+	--]]
 	elseif (flgStep == 12 or flgStep == 13) and (exists("tfop_choose_file.png", 0) or exists("tfop_choose_file_en.png", 0)) then
 		-- Choose file
 		click(getLastMatch())
 		wait(stepWaitSec)
 		flgStep = 13
+	elseif (flgStep == 11 or flgStep == 12) and exists("pms_radis_ss.png", 0) and exists("pms_zoom_in.png", 0) then
+		-- Wait PMS ready (pms)
+		click(exists("pms_radis_ss.png", 0))
+		wait(stepWaitSec)
+		flgStep = 12
 	elseif (flgStep == 13 or flgStep == 14) and exists("tfop_select_file.png", 0) then
 		-- Select file
 		click(getLastMatch())
@@ -303,13 +316,16 @@ while true do
 		click(exists("tfop_select_item_open_en.png", 0))
 		wait(stepWaitSec)
 		flgStep = 15
-	elseif flgStep == 15 and exists("tfop_upload.png", 0) then
+	--elseif flgStep == 15 and exists("tfop_upload.png", 0) then
+	elseif flgStep == 15 and exists("pms_upload.png", 0) then
 		-- Upload
 		click(getLastMatch())
 		-- wait(60)
 		funSnapContinue()
-		if exists("tfop_upload_success.png", 60) then
-			click(exists(Pattern("tfop_upload.png"):targetOffset(230,0), 0))
+		--if exists("tfop_upload_success.png", 60) then
+		if exists("pms_upload_success.png", 60) then
+			--click(exists(Pattern("tfop_upload.png"):targetOffset(230,0), 0))
+			click(exists("pms_close.png", 0))
 			wait(stepWaitSec)
 			keyevent(3) -- home
 			wait(stepWaitSec)
