@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180830 1030")
+addTextView("ver：20180903 0745")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -281,7 +281,7 @@ while true do
 		click(getLastMatch())
 		wait(stepWaitSec)
 		flgStep = 13
-	elseif (flgStep == 11 or flgStep == 12) and exists("pms_radis_ss.png", 0) and exists("pms_zoom_in.png", 0) then
+	elseif (flgStep == 11 or flgStep == 12) and exists("pms_radis_ss.png", 0) and (exists("pms_location.png", 0) or exists("pms_location2.png", 0)) then
 		-- Wait PMS ready (pms)
 		click(exists("pms_radis_ss.png", 0))
 		wait(stepWaitSec)
