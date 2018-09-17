@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180903 0745")
+addTextView("ver：20180916 1050")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -112,6 +112,12 @@ newRow()
 addTextView("Step Wait Seconds = ")
 addEditNumber("intPRTF_StepWait", 10)
 
+newRow()
+addCheckBox("chkPRTF_HaveEgg", "Must Have Egg", false)
+
+newRow()
+addCheckBox("chkPRTF_SSOnly", "Screenshot Only", false)
+
 dialogShow("Set Parameters")
 
 intHHbgn = intPRTF_HHbgn
@@ -119,6 +125,8 @@ intHHend = intPRTF_HHend
 
 rptInterval = intPRTF_Interval
 stepWaitSec = intPRTF_StepWait
+chkHaveEgg = chkPRTF_HaveEgg
+chkSSOnly = chkPRTF_SSOnly
 
 thrCnt = 0
 
@@ -192,12 +200,14 @@ while true do
 			-- Nearby Pokemon Find
 			click(exists("nearby_pokemon_find_exit.png", 0))
 			wait(stepWaitSec)
+		--[[
 		elseif exists("nearby_pokemong_active.png", 0) and (exists("nearby_blank.png", 0) or exists("nearby_pokemon_none.png", 0)) then
 			-- Nearby Pokemon and no internet connection
 			wait(stepWaitSec)
 		elseif exists("nearby_pokemong_active_en.png", 0) and (exists("nearby_blank.png", 0) or exists("nearby_pokemon_none_en.png", 0)) then
 			-- Nearby Pokemon and no internet connection
 			wait(stepWaitSec)
+		--]]
 		elseif regUpper:exists("nearby_pokemong_active.png", 0) then
 			-- Nearby Pokemon
 			click(regUpper:exists("nearby_raid_title.png", 0))
@@ -214,36 +224,42 @@ while true do
 			wait(stepWaitSec)
 		elseif exists("nearby_raid_active.png", 0) and exists("nearby_raid_none.png", 0) then
 			-- Nearby Raid and not found
-			click(regBottom:exists("nearby_exit.png", 0))
+			--click(regBottom:exists("nearby_exit.png", 0))
 			wait(stepWaitSec)
-			flgStep = 99
+			--flgStep = 99
 		elseif exists("nearby_raid_active_en.png", 0) and exists("nearby_raid_none_en.png", 0) then
 			-- Nearby Raid and not found
-			click(regBottom:exists("nearby_exit.png", 0))
+			--click(regBottom:exists("nearby_exit.png", 0))
 			wait(stepWaitSec)
-			flgStep = 99
-		elseif exists("nearby_raid_active.png", 0) or exists("nearby_raid_active_en.png", 0) then
+			--flgStep = 99
+		elseif (exists("nearby_raid_active.png", 0) or exists("nearby_raid_active_en.png", 0))
+			and ( chkHaveEgg == false or exists(Pattern("nearby_egg_1.png"):similar(0.9), 0) or exists(Pattern("nearby_egg_3.png"):similar(0.9), 0) or exists(Pattern("nearby_egg_5.png"):similar(0.9), 0)) then
 			-- Nearby Raid
 			keyevent(120) -- screenshot
 			wait(stepWaitSec)
 			funSnapContinue()
+			--[[
 			while regBottom:exists("nearby_exit.png", 0) do
 				click(regBottom:getLastMatch())
 				wait(stepWaitSec)
-				-- Message
-				if exists("msg_passenger.png", 0) or exists("msg_passenger_en.png", 0) then
-					click(getLastMatch())
+				--]]
+			-- Message
+			if exists("msg_passenger.png", 0) or exists("msg_passenger_en.png", 0) then
+				click(getLastMatch())
+				wait(stepWaitSec)
+				if regBottom:exists("nearby_exit.png", 0) then
+					-- Nearby Raid
+					keyevent(120) -- screenshot
 					wait(stepWaitSec)
-					if regBottom:exists("nearby_exit.png", 0) then
-						-- Nearby Raid
-						keyevent(120) -- screenshot
-						wait(stepWaitSec)
-					end
 				end
 			end
+			--end
 			keyevent(3) -- home
 			wait(stepWaitSec)
 			flgStep = 10
+			if chkPRTF_SSOnly == true then
+				flgStep = 99
+			end
 		end
 	elseif (flgStep == 10 or flgStep == 11) and exists("home_pokemon_go.png", 0) and exists("home_tfop.png", 0) then
 		-- Nearby Raid Screenshot Report to TFOP
@@ -257,11 +273,11 @@ while true do
 		-- close Upload dialog
 		click(exists(Pattern("tfop_upload.png"):targetOffset(230,0), 0))
 		wait(stepWaitSec)
-	--]]
 	elseif flgStep == 11 and exists("pms_upload.png", 0) and exists("pms_close.png", 0) then
 		-- close Upload dialog (pms)
 		click(exists("pms_close.png", 0))
 		wait(stepWaitSec)
+	--]]
 	elseif (flgStep == 11 or flgStep == 12) and os.difftime(currTime, startTFOP) >= 120 then
 		-- restart TFOP
 		keyevent(3) -- home
