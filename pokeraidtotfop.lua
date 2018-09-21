@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180916 1050")
+addTextView("ver：20180920 1010")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -278,7 +278,7 @@ while true do
 		click(exists("pms_close.png", 0))
 		wait(stepWaitSec)
 	--]]
-	elseif (flgStep == 11 or flgStep == 12) and os.difftime(currTime, startTFOP) >= 120 then
+	elseif (flgStep == 11 or flgStep == 12) and os.difftime(currTime, startTFOP) > (2 * stepWaitSec) then
 		-- restart TFOP
 		keyevent(3) -- home
 		wait(stepWaitSec)
@@ -332,7 +332,17 @@ while true do
 		click(exists("tfop_select_item_open_en.png", 0))
 		wait(stepWaitSec)
 		flgStep = 15
+	elseif flgStep == 15 then
+		funSnapContinue()
+		exists("pms_upload_success.png", 60)
+
+		click(exists("pms_close.png", 0))
+		wait(stepWaitSec)
+		keyevent(3) -- home
+		wait(stepWaitSec)
+		flgStep = 99
 	--elseif flgStep == 15 and exists("tfop_upload.png", 0) then
+	--[[
 	elseif flgStep == 15 and exists("pms_upload.png", 0) then
 		-- Upload
 		click(getLastMatch())
@@ -347,6 +357,7 @@ while true do
 			wait(stepWaitSec)
 			flgStep = 99
 		end
+	--]]
 	end
 
 end
