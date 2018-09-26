@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180920 1010")
+addTextView("ver：20180925 0745")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -292,7 +292,7 @@ while true do
 		wait(stepWaitSec)
 		flgStep = 12
 	--]]
-	elseif (flgStep == 12 or flgStep == 13) and (exists("tfop_choose_file.png", 0) or exists("tfop_choose_file_en.png", 0)) then
+	elseif (flgStep == 12 or flgStep == 13) and (exists("tfop_choose_file.png", 0) or exists("tfop_choose_file2.png", 0) or exists("tfop_choose_file_en.png", 0)) then
 		-- Choose file
 		click(getLastMatch())
 		wait(stepWaitSec)
@@ -302,7 +302,7 @@ while true do
 		click(exists("pms_radis_ss.png", 0))
 		wait(stepWaitSec)
 		flgStep = 12
-	elseif (flgStep == 13 or flgStep == 14) and exists("tfop_select_file.png", 0) then
+	elseif (flgStep == 12 or flgStep == 13 or flgStep == 14) and exists("tfop_select_file.png", 0) then
 		-- Select file
 		click(getLastMatch())
 		wait(stepWaitSec)
@@ -336,7 +336,8 @@ while true do
 		funSnapContinue()
 		exists("pms_upload_success.png", 60)
 
-		click(exists("pms_close.png", 0))
+		existsClick("pms_close.png", 0)
+		existsClick("pms_close2.png", 0)
 		wait(stepWaitSec)
 		keyevent(3) -- home
 		wait(stepWaitSec)
