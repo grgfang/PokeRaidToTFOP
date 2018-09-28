@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180925 0745")
+addTextView("ver：20180927 0825")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -338,6 +338,7 @@ while true do
 
 		existsClick("pms_close.png", 0)
 		existsClick("pms_close2.png", 0)
+		existsClick("pms_close3.png", 0)
 		wait(stepWaitSec)
 		keyevent(3) -- home
 		wait(stepWaitSec)
