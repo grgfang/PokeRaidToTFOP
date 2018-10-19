@@ -96,7 +96,7 @@ end
 dialogInit()
 
 newRow()
-addTextView("ver：20180927 0825")
+addTextView("ver：20181015 2150")
 
 newRow()
 addTextView("Report Time (HH - HH): ")
@@ -292,6 +292,10 @@ while true do
 		wait(stepWaitSec)
 		flgStep = 12
 	--]]
+	elseif (flgStep >= 10 or flgStep <= 19) and exists("pms_announcement.png", 0) then
+		-- Announcement
+		keyevent(4) -- back
+		wait(stepWaitSec)
 	elseif (flgStep == 12 or flgStep == 13) and (exists("tfop_choose_file.png", 0) or exists("tfop_choose_file2.png", 0) or exists("tfop_choose_file_en.png", 0)) then
 		-- Choose file
 		click(getLastMatch())
@@ -330,6 +334,16 @@ while true do
 	elseif (flgStep == 14 or flgStep == 15) and exists("tfop_select_1_item_en.png", 0) and exists("tfop_select_item_open_en.png", 0) then
 		-- Select Recent
 		click(exists("tfop_select_item_open_en.png", 0))
+		wait(stepWaitSec)
+		flgStep = 15
+	elseif (flgStep == 14 or flgStep == 15) and exists("pms_recent_menu.png", 0) then
+		-- Select Recent Menu
+		click(getLastMatch())
+		wait(stepWaitSec)
+		flgStep = 15
+	elseif (flgStep == 14 or flgStep == 15) and exists("pms_video_record.png", 0) then
+		-- Video Button
+		keyevent(4) -- back
 		wait(stepWaitSec)
 		flgStep = 15
 	elseif flgStep == 15 then
